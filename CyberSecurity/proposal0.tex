@@ -1,0 +1,187 @@
+\documentclass[utf8]{beamer}
+\usepackage{xeCJK}
+\usepackage{latexsym,amssymb,amsmath,amsbsy,amsopn,amstext,xcolor,multicol}
+\usepackage{graphicx,wrapfig,fancybox}
+\usepackage{thubeamer}
+\usepackage{fontspec}
+\usepackage{tikz}
+
+% I am the antenna
+% on fast and accurate detection of unauthorized wireless access points
+% a measurement based rogue ap detection scheme
+% a time-based rougue ap detetion scheme
+% wireless device identification with radiometric signatures
+
+%\documentclass[aspectratio=169,utf8]{beamer}
+
+
+\setsansfont{DejaVu Sans}
+
+%\setframeofframes{of} % 1/10 --> curPage of totPage
+
+% \renewcommand{\baselinestretch}{0.5} \normalsize
+
+\begin{document}
+
+
+\title{Rogue AP detection, locating, and countermeasures}
+\author{Y.Q. Yang, \\H.Z. Liang, \\H.F. Zhang}
+\institute{Nanjing University}
+%\date{}
+
+\frame{
+\titlepage
+}
+% \section*{Table Of Contents}
+% \frame {
+%   \frametitle{\secname}
+%   \begin{multicols}{2}
+%   \tableofcontents
+% \end{multicols}
+%   % \tableofcontents
+% }
+
+
+\AtBeginSection[] {
+\frame<handout:0> {
+\frametitle{Outline}
+% \begin{multicols}{2}
+\tableofcontents[current,currentsubsection]
+% \end{multicols}
+  }
+}
+%
+% \begin{itemize}
+% \end{itemize}
+\section{Intro}
+\frame{
+\frametitle{Rogue AP}
+
+Rogue(Fake) AP:
+\begin{center}
+  \includegraphics[width=.5\linewidth]{/home/allen/Pictures/fap.png}
+\end{center}
+
+\begin{itemize}
+  \item A fake AP can be set up by a malicious attacker
+(Figure 1) to masquerade as an authorized AP by spoofing
+the authorized AP’s medium access control (MAC) address.
+\end{itemize}
+
+}
+\section{Importance \& Challenges}
+\frame{
+\frametitle{Rogue AP is easy to set up}
+\begin{itemize}
+  \item rglueap: sniff 802.11 probe request frames
+  \item appications automatically setting up APs
+\end{itemize}
+}
+\frame{
+\frametitle{Rogue AP causes serious problems}
+\begin{itemize}
+  \item Manipulate \& Monitor: traffic of the client
+  \item Phishing: bank account and passwords
+\end{itemize}
+}
+\frame{
+\frametitle{Rogue AP is hard to detect}
+\begin{itemize}
+  \item Lack of validation information
+  \item Client lack privilege
+  \item Rogue AP can manage to escape from detection
+\end{itemize}
+}
+\section{Background}
+
+\frame{
+\frametitle{Initial attempt: Protocol}
+
+\begin{itemize}
+  \item Traditional crypto(802.11i RSNA)
+  \item Management is cumbersome
+  \item Signal strengtt: the only criteria
+  \item Same ID, different channel
+\end{itemize}
+}
+\frame{
+\frametitle{other ways}
+\begin{itemize}
+  \item MAC whitelist
+  \item RSS values
+  \item clock skews
+  \item radio frequency variations
+\end{itemize}
+}
+\frame{
+\frametitle{Follow-up attemps: timestamp based, mobicom'08}
+\begin{itemize}
+  \item Use TCP/IP Timestamp(X)
+  \item Use TSF(Time
+Synchronization Function) Timestamp
+\begin{itemize}
+  \item high granularity: 1ms
+  \item timestamp is actual time: no need for considering delays
+\end{itemize}
+\end{itemize}
+
+}
+\frame{
+\frametitle{Follow-up attemps: timestamp based, mobicom'08}
+Fitting the timestamp patterns
+\begin{itemize}
+  \item Linear programming method (LPM) to avoid delay
+  \item Least Square Fitting (LSF) to estimate
+  \item "Jump" exists: different AP
+\end{itemize}
+}
+\frame{
+\frametitle{Follow-up attemps: RTT-based, infocom'09}
+Rogue AP: 2 interfaces:
+\begin{itemize}
+  \item Interface connecting to legitimate AP
+  \item Interface pretending to be legal
+\end{itemize}
+Adversarial Examples:
+\begin{itemize}
+  \item identity faking: easy to change
+  \item traffic monitoring: both are wireless
+  \item simple timing or RTT(round trip time): just create a response
+\end{itemize}
+}
+\frame{
+\frametitle{Follow-up attemps: RTT-based, infocom'09}
+RTT time of DNS-lookup non-recursive query
+\begin{itemize}
+  \item most local networks has a local DNS server
+  \item a station can always send a dns-lookup request
+  \item DNS request cannot be blocked by network providers
+  \item DNS response varies for different queries
+  \item unpredictable, rogue AP forced to forward request.
+  \item Always "no such host name": rogue AP
+\end{itemize}
+}
+\section{Research Goals}
+\frame{
+\frametitle{Research Goals}
+\begin{itemize}
+  \item Find multiple approaches to detect rogue APs
+  \item Integrate exsisted methods to enhance effectiveness
+  \item Try to find approaches to locate rogue APs
+  \item Countermeasures
+\end{itemize}
+}
+\section{Refereences}
+\frame{
+\begin{itemize}
+\item \tiny [Zengbin Zhang et al., 2011]I am the antenna: accurate outdoor AP location using smartphones
+\item \tiny [Hao Han et al., 2011]A Timing-Based Scheme for Rogue AP Detection
+\item \tiny [Hao Han et al., 2009]A Measurement Based Rogue AP Detection Scheme
+\item \tiny [Vladimir Brik et al., 2008]Wireless Device Identification with Radiometric Signatures
+\item \tiny [Suman Jana et al., 2008]On Fast and Accurate Detection of Unauthorized Wireless
+Access Points Using Clock Skews
+
+\end{itemize}
+
+}
+\end{document}

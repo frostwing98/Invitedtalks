@@ -1,0 +1,263 @@
+% \documentclass[utf8]{beamer}
+\documentclass[aspectratio=169,utf8]{beamer}
+\usepackage[BoldFont,SlantFont]{xeCJK}
+\usepackage{latexsym,amssymb,amsmath,amsbsy,amsopn,amstext,xcolor,multicol}
+\usepackage{graphicx,wrapfig,fancybox}
+\usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps,pgfshade}
+\usepackage{thubeamer}
+\usepackage{fontspec}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric}
+
+
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width = 2cm, minimum height=1cm,text centered, draw = black ,fill = red!40]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=2cm, minimum height=1cm, text centered, draw=black,fill=green!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black,fill = yellow!50]
+\tikzstyle{decision} = [diamond, aspect = 3, text centered, draw=black, fill = blue!40]
+\tikzstyle{arrow} = [->,>=stealth]
+
+\setsansfont{DejaVu Sans}
+
+%\setframeofframes{of} % 1/10 --> curPage of totPage
+
+% \renewcommand{\baselinestretch}{0.5} \normalsize
+
+\begin{document}
+
+\title{The Art of War: Offensive Techniques in Binary Analysis}
+\author{Yan Shoshitaishvili et. al.}
+\institute{杨宇清}
+%\date{}
+
+\frame{
+\titlepage
+}
+\section*{Table Of Contents}
+\frame {
+  \frametitle{\secname}
+  \begin{multicols}{2}
+  \tableofcontents
+\end{multicols}
+  % \tableofcontents
+}
+
+
+% \AtBeginSubsection[] {
+% \frame<handout:0> {
+% \frametitle{Outline}
+% \begin{multicols}{2}
+% \tableofcontents[current,currentsubsection]
+% \end{multicols}
+%   }
+% }
+%
+% \begin{itemize}
+% \end{itemize}
+\section{Intro}
+\subsection{Motivation}
+\frame{
+\frametitle{Stubborn Binary Flaws}
+\begin{itemize}
+  \item Low-level language has few security gurantees
+  \item Simple flaws remain stubborn(e.g. buffer overflow)
+  \item New emerging vulnerabilities: IoT...
+\end{itemize}
+}
+\subsection{Offensive Tragedy}
+\frame{
+\frametitle{Problems of existing researches}
+\begin{itemize}
+  \item SOTA methods ends up in prototypes
+  \item Massive workload \& public unavailability: impractical to replicit
+\end{itemize}
+}
+\subsection{Goal}
+\frame{
+\frametitle{Solve the first issue}
+\begin{itemize}
+  \item Reproduce
+  \item Mitigate
+\end{itemize}
+}
+\section{Background}
+\subsection{Backgrounds}
+\frame{
+\frametitle{Automated Binary Analysis}
+\begin{itemize}
+  \item Replayability
+  \item Semantic insight
+\end{itemize}
+}
+
+\frame{
+\frametitle{Static Discovery}
+\begin{itemize}
+  \item Controll flow recovery
+  \begin{itemize}
+    \item Computed:target of jump is determined by calculation
+    \item Context-sensitive: Determined by the caller
+    \item Object-sensitive: In OO languages: e.g. virtual table
+  \end{itemize}
+  \item Flow modeling: requires pre-existing knowledge of the vulnerability
+  \item Data modeling: by applying a tight over-estimation
+\end{itemize}
+}
+\frame{
+\frametitle{Dynamic Discovery}
+\begin{itemize}
+  \item Concrete Execution: executing in a minimally instrumented environment
+  \begin{itemize}
+    \item Coverage-based fuzzing: AFL, modifying input
+    \item Taint-based fuzzing, tries to know how the program processes the data
+  \end{itemize}
+  \item Symbolic Execution: using abstract symbols to execute
+  \begin{itemize}
+    \item Classical: not very practical, bugs shallow
+    \item Symbolic-assisted fuzzing: combines the advantages of fuzzing and symbolic execution
+    \item Under-constrained symbolic execution: low replayability.
+  \end{itemize}
+\end{itemize}
+}
+\frame{
+\frametitle{Exploitation}
+\begin{itemize}
+  \item Crash reproduction
+  \begin{itemize}
+    \item Missing data
+    \item Missing relationships
+  \end{itemize}
+  \item Exploit generation: NULL-pointer
+  \item Exploit hardening: modern techniques(ASLR,etc.) makes it less practical
+\end{itemize}
+}
+\section{Design: Analysis Engine}
+\frame{
+\textbf{Goal:}
+\begin{itemize}
+  \item Cross-architecture
+  \item Cross-platform
+  \item Various analysis paradigm sypport
+  \item Usability
+\end{itemize}
+
+\textbf{Modules:}
+\begin{itemize}
+  \item Imtermediate representation
+  \item Binary Loading
+  \item State Representation/Modification
+  \item Data Model
+  \item Full-Program Analysis
+\end{itemize}
+}
+\frame{
+\frametitle{Imtermediate representation}
+libVEX
+}
+\frame{
+\frametitle{Binary Loading}
+CLE
+}
+\frame{
+\frametitle{State Representation/Modification}
+State plugins:
+\begin{itemize}
+  \item Registers
+  \item Symbolic memory
+  \item Abstract memory
+  \item POSIX
+  \item Log
+  \item Inspection
+  \item Solver
+  \item Architecture
+\end{itemize}
+}
+\frame{
+\frametitle{Data Model}
+Claripy: abstracts all values into internal representation
+\begin{itemize}
+  \item FullFrontend
+  \item CompositeFrontend
+  \item LightFrontend
+  \item ReplacementFrontend
+  \item HybridFrontend
+\end{itemize}
+}
+\frame{
+\frametitle{Full Program Analysis}
+A combine of all the methods above.
+}
+\section{Implementations}
+\frame{
+\frametitle{CFG Recovery}
+\begin{itemize}
+  \item Based on several assumptions
+  \item Iterative CFG Generation
+  \begin{itemize}
+  \item Forced Execution
+  \item Symbolic Execution
+  \item Backward Slicing
+  \end{itemize}
+  \item CFG Fast
+  \begin{itemize}
+    \item Function identification
+    \item Recursive disassembly
+    \item Indirect jump resolution
+  \end{itemize}
+\end{itemize}
+}
+\frame{
+\frametitle{Value Set Analysis}
+Improments against previous approaches:
+\begin{itemize}
+  \item Creating a discrete set of strided-intervals
+  \item Applying an algebraic solver to path predicates
+  \item Adopting a signedness-agnostic domain
+\end{itemize}
+}
+\frame{
+\frametitle{Dynamic Symbolic Execution}
+\begin{itemize}
+  \item Uses Claripy to populate symbolic model
+  \item Uses Path object(angr) to track action,path, etc.
+  \item Aggregate paths to PathGroup
+\end{itemize}
+}
+\frame{
+\frametitle{Under-constrained Symbolic Execution}
+Two changes:
+\begin{itemize}
+  \item Global memory under-constraining
+  \item False positive filtering
+\end{itemize}
+}
+\frame{
+\frametitle{Symbolic-assisted Fuzzing}
+\begin{itemize}
+  \item AFL executes until there is no new states
+  \item Invoke angr on unique paths for new transitions
+\end{itemize}
+}
+\frame{
+\frametitle{Crash Reproduction}
+\begin{itemize}
+  \item Search problem: an input bringing program from $s_{0}$ to $s$
+\end{itemize}
+}
+\frame{
+\frametitle{Exploit Generation}
+\begin{itemize}
+  \item Vulnerable States
+  \item Instruction Pointer Overwrite Technique
+  \item Exploiting CGC Binaries
+\end{itemize}
+}
+\frame{
+\frametitle{Exploit Hardening}
+Steps:
+\begin{itemize}
+  \item Gadget discovery
+  \item Gadget arrangement
+  \item Payload generation
+\end{itemize}
+}
+\end{document}

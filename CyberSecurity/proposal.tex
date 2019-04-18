@@ -1,0 +1,211 @@
+\documentclass[utf8]{beamer}
+\usepackage{xeCJK}
+\usepackage{latexsym,amssymb,amsmath,amsbsy,amsopn,amstext,xcolor,multicol}
+\usepackage{graphicx,wrapfig,fancybox}
+\usepackage{thubeamer}
+\usepackage{fontspec}
+\usepackage{tikz}
+
+
+%\documentclass[aspectratio=169,utf8]{beamer}
+
+
+\setsansfont{DejaVu Sans}
+
+%\setframeofframes{of} % 1/10 --> curPage of totPage
+
+% \renewcommand{\baselinestretch}{0.5} \normalsize
+
+\begin{document}
+
+
+\title{AI Model Testing Fuzzing:\\Research Project Proposal}
+\author{Yuqing Yang}
+\institute{Nanjing University}
+%\date{}
+
+\frame{
+\titlepage
+}
+% \section*{Table Of Contents}
+% \frame {
+%   \frametitle{\secname}
+%   \begin{multicols}{2}
+%   \tableofcontents
+% \end{multicols}
+%   % \tableofcontents
+% }
+
+
+\AtBeginSection[] {
+\frame<handout:0> {
+\frametitle{Outline}
+% \begin{multicols}{2}
+\tableofcontents[current,currentsubsection]
+% \end{multicols}
+  }
+}
+%
+% \begin{itemize}
+% \end{itemize}
+\section{Backgrounds}
+\subsection{AI fuzzing}
+\frame{
+\textbf{AI fuzzing}
+
+Fuzzing:
+
+\begin{itemize}
+  \item an automated software \textbf{testing} technique
+  \item provides invalid, unexpected, or random data as inputs to a computer program
+  \item monitors exceptions such as crashes, failing built-in code assertions, or potential memory leaks
+\end{itemize}
+
+Two main categories:
+\begin{itemize}
+  \item Fuzzing for AI
+  \item AI for fuzzing
+\end{itemize}
+}
+\subsubsection{Fuzzing for AI}
+\frame{
+\textbf{Fuzzing for AI}
+
+Target: AI Components
+
+\begin{itemize}
+  \item neuron coverage\footnotemark[1]
+  \item layer coverage\footnotemark[2]
+  \item formal security method\footnotemark[3]
+\end{itemize}
+\footnotetext[1]{\href{https://arxiv.org/pdf/1705.06640.pdf}{\tiny [Kexin Pei et al., 2017]DeepXplore: Automated Whitebox Testing of Deep Learning Systems}}
+\footnotetext[2]{\href{https://arxiv.org/pdf/1803.07519.pdf}{\tiny [Lei Ma et al., 2018]DeepGauge: Multi-Granularity Testing Criteria for Deep Learning Systems}}
+\footnotetext[3]{\href{https://arxiv.org/pdf/1804.10829.pdf}{\tiny [Shiqi Wang et al., 2018]Formal Security Analysis of Neural Networks using Symbolic Intervals}}
+
+
+}
+\subsubsection{AI for fuzzing}
+\frame{
+\textbf{AI for fuzzing}
+
+Method: AI
+
+\begin{itemize}
+  \item RNN-based(LSTM+AFL)\footnotemark[4]
+  \item CNN-based(CNN+gradient descent)\footnotemark[5]
+  \item RL(Q-Learning)\footnotemark[6]
+\end{itemize}
+\footnotetext[4]{\href{https://arxiv.org/pdf/1711.04596.pdf}{\tiny [Mohit Rajpal et al., 2017]Not all bytes are equal: Neural byte sieve for fuzzing}}
+\footnotetext[5]{\href{https://arxiv.org/pdf/1705.06640.pdf}{\tiny [Dongdong She et al., 2017]NEUZZ: Efficient Fuzzing with NeuralProgram Smoothing}}
+\footnotetext[6]{\href{https://arxiv.org/pdf/1801.04589.pdf}{\tiny [Konstantin Bottinger et al., 2018]Deep Reinforcement Fuzzing}}
+
+
+}
+\subsection{Testing}
+\frame{
+\textbf{Testing}
+
+\begin{itemize}
+  \item Blackbox, testing functions without peering into internal structures or workings
+  \item Whitebox, testing  internal structures or workings of an application
+  \item Greybox, tests improper structure-caused defects, if any
+\end{itemize}
+}
+\subsection{Coverage}
+\frame{
+  \textbf{Coverage}
+
+  \textbf{Software testing measurement} for describing the degree to which the source code of a program is executed
+
+  \begin{itemize}
+    \item Edge Coverage
+    \item Function Coverage
+    \item Statement Coverage
+
+  \end{itemize}
+}
+\subsection{CNN,RNN}
+\frame{
+\textbf{CNN,RNN}
+
+Short view:
+\begin{itemize}
+  \item MLP: Simplest DNN with fully-connected layers
+  \item CNN: +Hypo:Space-correlation, everywhere in CV
+  \item RNN: +Hypo:Time-correlation, usually used in Speech Analytics
+\end{itemize}
+}
+
+\section{Related Works}
+\subsection{DeepXPlore}
+\frame{
+\textbf{DeepXPlore}\footnotemark[1]
+
+\begin{itemize}
+  \item Neuron coverage: coverage of neurons with outputs exceeding preset thresholds
+  \item Goal: Optimize neuron coverage
+  \item How: Gradient Descending aiming to find maximal value
+\end{itemize}
+
+\footnotetext[1]{\href{https://arxiv.org/pdf/1705.06640.pdf}{\tiny [Kexin Pei et al., 2017]DeepXplore: Automated Whitebox Testing of Deep Learning Systems}}
+
+
+}
+\subsection{DeepGauge}
+\frame{
+\textbf{DeepGauge}\footnotemark[2]
+
+\begin{itemize}
+  \item Neuron coverage is not enough:
+  \begin{itemize}
+    \item k-multisection Neuron Coverage
+    \item Neuron Boundary Coverage \\(Corner Region Coverage)
+    \item Strong Neuron Activation Coverage \\(Corner Case Coverage)
+  \end{itemize}
+  \item Layer coverage:
+  \begin{itemize}
+    \item Top-k Neuron Coverage
+    \item Top-k Neuron Patterns
+  \end{itemize}
+\end{itemize}
+
+\footnotetext[2]{\href{https://arxiv.org/pdf/1803.07519.pdf}{\tiny [Lei Ma et al., 2018]DeepGauge: Multi-Granularity Testing Criteria for Deep Learning Systems}}
+
+
+}
+\subsection{ReluVal}
+\frame{
+\textbf{ReluVal}\footnotemark[3]
+
+\begin{itemize}
+  \item Formal Security: Mathematically declared secure properties
+  \item Goal: Achieve an exhaustive, high-performance analysis method
+  \item How: Symbolic intervals and Interval analysis
+\end{itemize}
+
+\footnotetext[3]{\href{https://arxiv.org/pdf/1804.10829.pdf}{\tiny [Shiqi Wang et al., 2018]Formal Security Analysis of Neural Networks using Symbolic Intervals}}
+
+
+}
+\section{Research Goal}
+\frame{
+\begin{itemize}
+  \item Goal: To explore new efficient way of fuzzing for AI components
+  \item Target: Exsisting AI components
+  \item How: Explore by adopting, analysing, optimizing exsisting fuzzing methods
+  \item How: Optimize by combining suitable AI methods
+\end{itemize}
+}
+\section{Refereences}
+\frame{
+\begin{itemize}
+\item \href{https://arxiv.org/pdf/1705.06640.pdf}{\tiny [Kexin Pei et al., 2017]DeepXplore: Automated Whitebox Testing of Deep Learning Systems}
+\item \href{https://arxiv.org/pdf/1803.07519.pdf}{\tiny [Lei Ma et al., 2018]DeepGauge: Multi-Granularity Testing Criteria for Deep Learning Systems}
+\item \href{https://arxiv.org/pdf/1804.10829.pdf}{\tiny [Shiqi Wang et al., 2018]Formal Security Analysis of Neural Networks using Symbolic Intervals}
+\item \href{https://arxiv.org/pdf/1711.04596.pdf}{\tiny [Mohit Rajpal et al., 2017]Not all bytes are equal: Neural byte sieve for fuzzing}
+\item \href{https://arxiv.org/pdf/1705.06640.pdf}{\tiny [Dongdong She et al., 2017]NEUZZ: Efficient Fuzzing with NeuralProgram Smoothing}
+\item \href{https://arxiv.org/pdf/1801.04589.pdf}{\tiny [Konstantin Bottinger et al., 2018]Deep Reinforcement Fuzzing}
+\end{itemize}
+
+}
+\end{document}

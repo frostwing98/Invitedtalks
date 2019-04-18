@@ -1,0 +1,100 @@
+\documentclass[aspectratio=169,utf8]{beamer}
+\usepackage[BoldFont,SlantFont]{xeCJK}
+\usepackage{latexsym,amssymb,amsmath,amsbsy,amsopn,amstext,xcolor,multicol}
+% \usepackage{graphicx,wrapfig,fancybox}
+% \usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps,pgfshade}
+\usepackage{thubeamer}
+% \usepackage{fontspec}
+% \usepackage{tikz}
+\usepackage{listings}
+\usepackage{ulem}
+
+
+\setsansfont{DejaVu Sans}
+
+%\setframeofframes{of} % 1/10 --> curPage of totPage
+
+\begin{document}
+
+\title{Java Fundamentals 1:\\Intellij idea介绍与java基本介绍}
+\author{\href{mailto:161250179@smail.nju.edu.cn}{frostwing98}}
+\institute{SWI-NJU}
+\frame{
+  \titlepage
+
+
+}
+\section*{Table Of Contents}
+\frame[allowframebreaks] {
+  \frametitle{\secname}
+    % \begin{multicols}{2}
+    \tableofcontents
+  % \end{multicols}
+
+}
+
+\AtBeginSubsection[] {
+\frame<handout:0>[allowframebreaks] {
+\frametitle{Outline}
+\begin{multicols}{2}
+
+\tableofcontents[current,currentsubsection]
+\end{multicols}
+
+  }
+}
+\section{First things first：开发环境搭建}
+\frame{
+如果你已经有idea和jdk可以跳过此部分。
+}
+\frame{
+\textbf{工欲善其事，必先利其器}
+
+\textbf{IDE}
+java开发的ide主要有两种，eclipse与intellij idea。
+
+使用Intellij Idea的\textbf{五}个理由
+\begin{itemize}
+  \item 多样的插件支持
+  \item 多种语言支持
+  \item 有爱的自动补全
+  \item Jetbrains全家桶
+  \item 学生免费！免费！
+\end{itemize}
+
+当然你可以试试用命令行编译什么的，一定比用记事本写c程序要恶心的多了
+}
+\frame{
+\textbf{下载IDE}
+\begin{itemize}
+  \item 下载IDE很简单。到Jetbrains官网：https://www.jetbrains.com/idea/ 下载安装就行。
+  \item 值得一提的是注册一个学生帐号可以获得免费的ultimate版本的使用权。ultimate版本提供了很多框架的功能，之后的之后可能会用到。
+\end{itemize}
+
+因为IDE仅仅只是工具而已，所以在哪里学习并不重要。因此我们不会重点介绍idea的功能，具体的教程可以自行参考。
+
+
+}
+\subsection{jdk}
+\frame{
+\textbf{安装jdk}
+\begin{itemize}
+  \item 安装完intellij之后的第二步就是下载jdk:https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+  \item 用的比较多的是java8，当然版本新一点也可以。需要根据你windows的版本下载x64(64位)/x86(32位)。下载后解压。别忘了设置环境变量JAVAHOME和PATH。
+\end{itemize}
+
+可以参考 https://jingyan.baidu.com/article/6dad5075d1dc40a123e36ea3.html 这个教程。
+
+
+}
+\section{第一个hello world}
+\frame{
+\textbf{新建项目}
+
+\begin{itemize}
+  \item 打开idea，新建项目-java,应该就能看到project SDK了。如果没有，需要手动制定jdk的bin文件夹。
+  \item 在左侧的src文件夹右击，新 java class，我们就叫它demo好了。
+\end{itemize}
+
+
+\end{document}

@@ -1,0 +1,391 @@
+﻿\documentclass[utf8]{beamer}
+\usepackage[BoldFont,SlantFont]{xeCJK}
+\usepackage{latexsym,amssymb,amsmath,amsbsy,amsopn,amstext,xcolor,multicol}
+\usepackage{graphicx,wrapfig,fancybox}
+\usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps,pgfshade}
+\usepackage{njubeamer}
+\usepackage{fontspec}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric}
+
+
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width = 2cm, minimum height=1cm,text centered, draw = black ,fill = red!40]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=2cm, minimum height=1cm, text centered, draw=black,fill=green!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black,fill = yellow!50]
+\tikzstyle{decision} = [diamond, aspect = 3, text centered, draw=black, fill = blue!40]
+\tikzstyle{arrow} = [->,>=stealth]
+
+\setsansfont{DejaVu Sans}
+
+%\setframeofframes{of} % 1/10 --> curPage of totPage
+
+\begin{document}
+
+\title{GeekMark Crowdsourcing}
+\author{frostwing98}
+\institute{Nanjing University}
+%\date{}
+
+\frame{
+\titlepage
+\begin{figure}[htpb]
+  \begin{center}
+  \includegraphics[width=0.2\linewidth]{download.png}
+  \end{center}
+\end{figure}
+}
+
+  \section*{Table Of Contents}
+  \frame {
+    \frametitle{\secname}
+    \tableofcontents
+  }
+
+
+  \AtBeginSubsection[] {
+  \frame<handout:0> {
+  \frametitle{Outline}
+  \tableofcontents[current,currentsubsection]
+    }
+  }
+  \section{什么是好的产品}
+  \subsection{第一印象}
+  \begin{figure}[]
+    \begin{center}
+    \includegraphics[width=1\linewidth]{screenshot.png}
+    \end{center}
+  \end{figure}
+
+  \subsection{什么是好的产品？}
+  \frame
+  {
+  "UFO"
+    \frametitle{\secname~ }
+    \begin{block}{UI Intereaction}
+    \end{block}
+    \begin{block}{Functionality}
+    \end{block}
+    \begin{block}{Optimization}
+    \end{block}
+    }
+  \section{软件特性}
+    \subsection{功能性}
+      \subsubsection{举例：发布任务过程}
+
+        \frame{
+
+        让我们想象一下你是发布者……
+        \begin{itemize}[<+-| alert@+>]
+          \item
+          发布任务... XD
+          \item
+          N分钟以后……
+          \item
+          !信息填错了!我怎么管不住我的手呢！ 0.0
+          \item
+          删掉任务! :)
+          \item
+          重新发布.
+        \end{itemize}
+        }
+        \frame{
+        现在让我们想象一下你是一个工人...
+          \begin{itemize}[<+-| alert@+>]
+          \item
+         打开网站... :)
+          \item
+         有新任务！! XD
+          \item
+         Done! 坐等评分. :)
+          \item
+         什么鬼!任务没了！垃圾平台，还我分数！ QAQ
+          \end{itemize}
+        }
+        \frame{
+          \begin{itemize}[<+-| alert@+>]
+          \item
+         管理员：
+          \item
+         这什么数据啊，有mark没任务，搞什么啊？
+          \item
+         垃圾平台，我要跳槽！
+          \end{itemize}
+        }
+        \frame{
+        谁该背锅？
+          \begin{itemize}[<+-| alert@+>]
+          \item
+            发起者！他管不住自己的手，就应该为自己的错误买单！
+            \begin{enumerate}
+            \item ——如果惩罚发起者，发起者不愿发起任务。
+          \end{enumerate}
+          \item
+            工人背锅！就少给点分数意思一下保个底就行了……
+            \begin{enumerate}
+            \item
+            ——工人：？？？
+            \item
+            ——工人流失。
+          \end{enumerate}
+          \item
+            平台背锅！给工人钱！
+            \begin{enumerate}
+            \item——平台破产
+            \item——全剧终。
+            \end{enumerate}
+          \item
+            emmmmm……众人无语ing
+          \end{itemize}
+        }
+        \frame{
+        \frametitle{n次开会（争吵）之后……}
+        }
+        \frame{
+        \frametitle{n次开会（争吵）之后……}
+
+        \begin{block}{发布任务}
+        \end{block}
+        \begin{block}{取消任务}
+        \end{block}
+        \begin{block}{提前结束}
+        \end{block}
+        \begin{block}{延长任务}
+        \end{block}
+        }
+        \subsubsection{举例：部署过程}
+        \frame{
+        现在让我们想象一下你是一个管理员……
+        \begin{itemize}[<+-| alert@+>]
+          \item ——部署文档怎么那么长啊……
+          \item ——部署文档怎么看不懂啊……
+          \item ——部署文档怎么有错啊……
+        \end{itemize}
+        }
+        \frame{
+        \includegraphics[width=0.8\linewidth]{1.png}
+        \includegraphics[width=0.8\linewidth]{2.png}
+        }
+        \frame{
+        \includegraphics[width=0.8\linewidth]{3.png}
+
+        }
+        \frame{
+        \includegraphics[width=0.8\linewidth]{4.png}
+        }
+  \subsection{性能}
+  \subsubsection{图片加载优化}
+
+  \frame{
+    %\frametitle{\subsecname~Goods}
+	朝着更快进发……
+    \begin{enumerate}[<+-| alert@+>]
+    \item
+	  图片压缩
+    \includegraphics[width=0.4\linewidth]{screen.jpg}
+  \end{enumerate}
+  }
+\frame{
+\begin{enumerate}[<+-| alert@+>]
+  \setcounter{enumi}{1}
+  \item
+  阿里云 OSS 对象存储服务
+  \includegraphics[width=1\linewidth]{OSS.png}
+\end{enumerate}
+}
+\frame{
+\begin{enumerate}[<+-| alert@+>]
+  \setcounter{enumi}{2}
+  \item
+  分布式标注信息存储
+  \item
+  分布式分数计算
+  \begin{enumerate}
+  \item——悲壮的尝试……
+  \includegraphics[width=0.8\linewidth]{RIP.png}
+  \end{enumerate}
+\end{enumerate}
+
+}
+  \section{项目概述}
+  \subsection{代码架构}
+    \frame{
+    \scalebox{0.75}{
+      \begin{tikzpicture}[node distance=2cm]
+      %定义流程图具体形状
+      \node[process](front) at (5,7.5) {展示层};
+      \node[process](Controller) at (5,6) {控制器};
+      \node[process](BL) at (5,4.5) {BL层};
+      \node[process](Repository) at (5,3) {bean仓库};
+      \node[decision](OSS) at (12,4.5) {阿里云OSS};
+      \node[process](Beans) at (0,1.5) {beans};
+      \node[decision](DataBase) at (5,0) {数据库};
+      %\node[process](Beans) at (0,5)
+      \draw [arrow] (front) -- (Controller);
+      \draw [arrow] (Controller) -- (BL);
+      \draw [arrow] (BL) -- (Repository);
+      \draw [arrow] (BL) -- (OSS);
+      %\draw (Repository) -- node [below] {自动装配} (Beans);
+      \draw [arrow] (Repository) -- (Beans);
+      \draw [arrow] (Beans) -- (DataBase);
+      \end{tikzpicture}
+      }
+    }
+
+
+    \subsection{小组组成}
+    \frame{
+      \begin{tikzpicture}[node distance=2cm]
+      \node[process](front) at (0,7.5) {张寅-前端};
+      \node[startstop,right of = front, node distance=60mm](desc1){靠谱担当！};
+      \node[process](Controller) at (0,6) {虞圣呈-BL};
+      \node[startstop,right of = Controller,node distance=60mm](desc2){骚思路担当！！};
+      \node[process](BL) at (0,4.5) {石沁轩-后端、文档};
+      \node[startstop,right of = BL, node distance=60mm](desc3){救急担当！};
+      \node[process](Repository) at (0,3) {杨宇清-层间交互-疯狂debug};
+      \node[startstop,right of = Repository, node distance=60mm](desc4){多灾多难的PM};
+
+      \end{tikzpicture}
+    }
+    \subsection{一个简单的添加功能过程}
+    \frame{
+    \scalebox{0.6}{
+      \begin{tikzpicture}[node distance=1cm]
+        \node[startstop](start){接受挑战！};
+        \node[io, below of = start, yshift = -1cm](in1){开会分（抢）锅};
+        \node[process, below of = in1, yshift = -1cm](pro1){BL写完，催前端};
+        \node[process, below of = pro1, yshift = -1cm](dec1){前端写完，催数据库};
+        \node[process, below of = dec1, yshift = -1cm](dec2){PM写完，催数据库};
+
+        \coordinate (point1) at (-3cm, -6cm);
+        %连接具体形状
+        \draw [arrow] (start) -- (in1);
+        \draw [arrow] (in1) -- (pro1);
+        \draw [arrow] (pro1) -- (dec1);
+        \draw [arrow] (dec1) -- (dec2);
+      \end{tikzpicture}
+    }
+    }
+    \frame{
+    \scalebox{0.6}{
+      \begin{tikzpicture}[node distance=1cm]
+        \node[startstop](start){接受挑战！};
+        \node[io, below of = start, yshift = -1cm](in1){开会分（抢）锅};
+        \node[process, below of = in1, yshift = -1cm](pro1){BL写完，催前端};
+        \node[process, below of = pro1, yshift = -1cm](dec1){前端写完，催数据库};
+        \node[process, below of = dec1, yshift = -1cm](dec2){PM写完，催数据库};
+        \node[process, below of = dec2, yshift = -1cm](pro2){PM写数据库};
+
+
+        \coordinate (point1) at (-3cm, -6cm);
+        %连接具体形状
+        \draw [arrow] (start) -- (in1);
+        \draw [arrow] (in1) -- (pro1);
+        \draw [arrow] (pro1) -- (dec1);
+        \draw [arrow] (dec1) -- (dec2);
+        \draw [arrow] (dec2) -- (pro2);
+      \end{tikzpicture}
+    }
+    }
+    \frame{
+    \scalebox{0.6}{
+      \begin{tikzpicture}[node distance=1cm]
+        \node[startstop](start){接受挑战！};
+        \node[io, below of = start, yshift = -1cm](in1){开会分（抢）锅};
+        \node[process, below of = in1, yshift = -1cm](pro1){BL写完，催前端};
+        \node[process, below of = pro1, yshift = -1cm](dec1){前端写完，催数据库};
+        \node[process, below of = dec1, yshift = -1cm](dec2){PM写完，催数据库};
+        \node[process, below of = dec2, yshift = -1cm](pro2){PM写数据库};
+
+        \node[process, right of = start, yshift = -1cm, node distance=120mm](pro3){PM合成系统};
+        \node[process, below of = pro3, yshift = -1cm](out1){BUG出现};
+        \node[process, below of = out1, yshift = -1cm](debug){PM debug};
+        \node[process, below of = debug, yshift = -1cm](debug1){PM 通知大家改bug};
+        \node[decision, below of = debug1,yshift=-1cm](debug2){bug de完没有？};
+        \node[startstop, below of = debug2, yshift = -1cm](stop){PM debug至死};
+        \coordinate (point1) at (-3cm, -6cm);
+        %连接具体形状
+        \draw [arrow] (start) -- (in1);
+        \draw [arrow] (in1) -- (pro1);
+        \draw [arrow] (pro1) -- (dec1);
+        \draw [arrow] (dec1) -- (dec2);
+        \draw [arrow] (dec2) -- (pro2);
+        \draw [arrow] (pro2.east) -- (pro3.west);
+        \draw [arrow] (pro3) -- (out1);
+        \draw [arrow] (out1) -- (debug);
+        \draw [arrow] (debug) -- (debug1);
+        \draw [arrow] (debug1) -- (debug2);
+        \draw[->](debug2.east)|-node[right]{Yes}(out1);
+        \draw [arrow] (debug2) -- (stop);
+      \end{tikzpicture}
+    }
+    }
+\section{总结}
+\frame{
+\begin{enumerate}[<+-| alert@+>]
+  \item{
+  启示1
+  }
+  \begin{block}{会用轮子很重要，用好轮子更重要}
+  \end{block}
+  \item{
+  启示2
+  }
+  \begin{block}{一个项目的架构与开发成员密切相关}
+  \end{block}
+  \item{
+  启示3
+  }
+  \begin{block}{后期合成时流的泪都是前期架构时脑子进的水}
+  \end{block}
+
+\end{enumerate}
+}
+\frame{
+\begin{enumerate}[<+-| alert@+>]
+  \setcounter{enumi}{3}
+    \item{
+    启示4
+    }
+    \begin{block}{DDL-Driven:永恒的驱动逻辑}
+    \end{block}
+    \item{
+    启示5
+    }
+    \begin{block}{BUG是DE不完的，这辈子都DE不完的}
+    \end{block}
+    \item{
+    启示6
+    }
+    \begin{block}{开心就好}
+    \end{block}
+  \end{enumerate}
+}
+\subsection*{Thanks}
+
+
+
+\frame{
+  %\frametitle{\subsecname}
+  \begin{columns}
+  \column{3cm}
+  \column{4cm}
+    Thank you!
+  \column{3cm}
+  \end{columns}
+}
+
+\end{document}
+
+
+%\frame{
+%  %\frametitle{\subsecname~ frame b}
+%  \begin{itemize}[<+-| alert@+>]
+%  \item
+%  item a
+%  \end{itemize}
+%}
+%\begin{figure}
+%\includegraphics[height=10cm,width=12cm]{a3.eps}
+%\caption{}
+%\label{a3}
+%\end{figure}

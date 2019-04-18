@@ -1,0 +1,148 @@
+\documentclass[utf8]{beamer}
+\usepackage[BoldFont,SlantFont]{xeCJK}
+\usepackage{latexsym,amssymb,amsmath,amsbsy,amsopn,amstext,xcolor,multicol}
+% \usepackage{graphicx,wrapfig,fancybox}
+% \usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps,pgfshade}
+\usepackage{thubeamer}
+% \usepackage{fontspec}
+% \usepackage{tikz}
+\usepackage{listings}
+\usepackage{ulem}
+\usepackage{graphicx}
+\usepackage{tikz}
+
+\setsansfont{DejaVu Sans}
+
+%\setframeofframes{of} % 1/10 --> curPage of totPage
+
+\begin{document}
+
+\title{When JAVA going SMART:\\Android JNI Source Code Analysis}
+\author{\href{mailto:161250179@smail.nju.edu.cn}{frostwing98}}
+\institute{NJU-SWI}
+\frame{
+  \titlepage
+}
+\section*{Table Of Contents}
+\frame[allowframebreaks] {
+  \frametitle{\secname}
+    % \begin{multicols}{2}
+    \tableofcontents
+  % \end{multicols}
+
+}
+
+\AtBeginSubsection[] {
+\frame<handout:0>[allowframebreaks] {
+\frametitle{Outline}
+\begin{multicols}{2}
+
+\tableofcontents[current,currentsubsection]
+\end{multicols}
+
+  }
+}
+\section{JNI Intro}
+\subsection{What is JNI}
+\frame{
+\begin{figure}[ht]
+\includegraphics[width=0.45\textwidth]{/home/allen/Pictures/cppfather.jpg}\hfill \pause
+\includegraphics[width=0.45\textwidth]{/home/allen/Pictures/java.jpg}\hfill \pause
+\caption{cpp \textbf{♂} java}
+\end{figure}
+}
+\frame{
+\frametitle{What is JNI}
+\textbf{Java Native Interface}
+\begin{itemize}
+  \item A foreign function interface programming framework
+  \item Enables Java code to call/be called by native applications
+  \item Or libraries in C/C++
+\end{itemize}
+}
+\subsection{JNI Everywhere}
+
+\frame{
+\frametitle{Applications of JNI}
+\begin{figure}[ht]
+\includegraphics[width=0.4\textwidth]{/home/allen/Pictures/5.png}\hfill \pause
+\includegraphics[width=0.3\textwidth]{/home/allen/Pictures/ttpt1.png}\hfill \pause
+\includegraphics[width=0.3\textwidth]{/home/allen/Pictures/6.png}
+\caption{Android apps with DL frameworks}
+\label{fig4}
+\end{figure}
+}
+\subsection{JNI At First Glance}
+\frame{
+
+\frametitle{JNI:An example}
+
+
+}
+\section{JNI Analysis}
+\subsection{JVM Init}
+\frame{
+\frametitle{From Init to Zygote}
+\begin{itemize}
+  \item After boot, Android starts \textbf{Init} process
+  \item \textbf{Init} then calls \textbf{Zygote}
+  \item \textbf{Zygote} is initiated.
+  \href{https://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/cmds/app_process/app_main.cpp}{\beamergotobutton{main->runtime.start()}}
+  \item After \textbf{Init}, call \textbf{Zygote} which initiates Java VM and register jni methods.
+\href{https://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/core/jni/AndroidRuntime.cpp}{\beamergotobutton{AndroidRuntime::start()->startReg()->register\_jni\_procs()}}
+\end{itemize}
+
+}
+\frame{
+\frametitle{With Zygote into Runtime}
+\textbf{Init I}
+\begin{itemize}
+  \item When calling register\_jni\_procs, register\_android\_os\_MessageQueue is called.
+  \href{https://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/core/jni/android_os_MessageQueue.cpp}{\beamergotobutton{register\_jni\_procs()->register\_android\_os\_MessageQueue()}}
+  \item Then messageQueue registers the method.\href{https://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/core/jni/core_jni_helpers.h}{\beamergotobutton{register\_android\_os\_MessageQueue()->RegisterMethodsOrDie()}}
+  \item Each jni methods calls RegisterMethodsOrDie().
+\end{itemize}
+\textbf{Init II}
+\begin{itemize}
+  \item Runtime has several init methods, calling jniRegisterNativeMethods in JNIHelper.\href{https://android.googlesource.com/platform/libnativehelper/+/refs/heads/master/JNIHelp.cpp}{\beamergotobutton{Runtime->jniRegisterNativeMethods}}
+  \item The JNIEnv let JNINativeInterface to process:\href{https://android.googlesource.com/platform/libnativehelper/+/refs/heads/master/include_jni/jni.h}{\beamergotobutton{\_JNIEnv struct}}
+\end{itemize}
+}
+\subsection{Into JNIEnv}
+
+\frame{
+\frametitle{Into JNIEnv}
+\begin{itemize}
+  \item JNINativeInterface has function pointer to RegisterNative:\href{https://android.googlesource.com/platform/art/+/refs/heads/master/runtime/jni/jni_internal.cc}{\beamergotobutton{RegisterNative}}
+  \item Then invoke RegisterNative let ArtMethod to register:\href{https://android.googlesource.com/platform/art/+/refs/heads/master/runtime/art_method.cc}{\beamergotobutton{JNINativeInterface->RegisterNative}}
+\end{itemize}
+}
+\frame{
+\frametitle{Summary}
+\begin{itemize}
+  \item On boot the system inits init process, then zygote
+  \item Zygote is the father of all APP processes,  during the init the VM boots and framework JNI registered
+  \item Zygote invoke register\_xxx method to register each module
+  \item Each module invokes RegisterMethodsOrDie to register JNINativeMtehod array
+  \item Eventually it goes into the VM to update each ARTMethod entry\_point\_from\_jni\_ by SetNativePointer
+\end{itemize}
+}
+\subsection{JNI Load}
+\frame{
+\frametitle{Through loadlibrary}
+\begin{itemize}
+  \item System \href{https://android.googlesource.com/platform/libcore/+/refs/heads/master/ojluni/src/main/java/java/lang/System.java}{\beamergotobutton{System}}
+  \item Runtime \href{https://android.googlesource.com/platform/libcore/+/refs/heads/master/ojluni/src/main/java/java/lang/Runtime.java }{\beamergotobutton{Runtime}}
+  \item Then into jvm \href{https://android.googlesource.com/platform/art/+/refs/heads/master/openjdkjvm/OpenjdkJvm.cc}{\beamergotobutton{Runtime\_nativeLoad->JVM\_NativeLoad}}
+  \item At last into JNI, \href{https://android.googlesource.com/platform/art/+/refs/heads/master/runtime/jni/java_vm_ext.cc}{\beamergotobutton{JVM\_NativeLoad->LoadNativeLibrary--->Java\_OnLoad}}
+\end{itemize}
+}
+\frame{
+\frametitle{Summary}
+\begin{itemize}
+  \item System.loadLibrary()
+  \item LoadNativeLibrary
+  \item JNI\_OnLoad
+\end{itemize}
+}
+\end{document}

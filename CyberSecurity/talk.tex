@@ -1,0 +1,457 @@
+\documentclass[aspectratio=169,utf8]{beamer}
+\usepackage[BoldFont,SlantFont]{xeCJK}
+\usepackage{latexsym,amssymb,amsmath,amsbsy,amsopn,amstext,xcolor,multicol}
+% \usepackage{graphicx,wrapfig,fancybox}
+% \usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps,pgfshade}
+\usepackage{thubeamer}
+% \usepackage{fontspec}
+% \usepackage{tikz}
+% \usepackage{listings}
+\usepackage{ulem}
+
+
+\setsansfont{DejaVu Sans}
+
+%\setframeofframes{of} % 1/10 --> curPage of totPage
+
+\begin{document}
+
+\title{Information Security Advances\\with a Focus on AI \& Privacy Preserving}
+\author{\href{mailto:161250179@smail.nju.edu.cn}{frostwing98}}
+\institute{COSEC of Nanjing University}
+\frame{
+  \titlepage
+
+
+}
+\section*{Table Of Contents}
+\frame[allowframebreaks] {
+  \frametitle{\secname}
+    \begin{multicols}{2}
+    \tableofcontents
+  \end{multicols}
+
+}
+
+\AtBeginSubsection[] {
+\frame<handout:0>[allowframebreaks] {
+\frametitle{Outline}
+\begin{multicols}{2}
+
+\tableofcontents[current,currentsubsection]
+\end{multicols}
+
+  }
+}
+\section{Information Security}
+\frame{
+\begin{itemize}
+  \item \sout{Traditional}
+  \begin{itemize}\pause
+    \item \sout{Vulnurables}\pause
+    \item \sout{Cybersecurity}\pause
+    \item \sout{Cryptography}\pause
+  \end{itemize}
+  \item Cross-Disciplinary
+  \begin{itemize}\pause
+    \item Fuzzing\pause
+    \item Privacy\pause
+    \item \sout{Security-schema}
+  \end{itemize}
+\end{itemize}
+}
+\section{Selected Topic: Fuzzing}
+\frame{
+\textbf{AI fuzzing}
+
+Fuzzing:
+
+\begin{itemize}
+  \item an automated software \textbf{testing} technique
+  \item provides invalid, unexpected, or random data as inputs to a computer program
+  \item monitors exceptions such as crashes, failing built-in code assertions, or potential memory leaks
+\end{itemize}
+
+Two main categories:
+\begin{itemize}
+  \item Fuzzing for AI
+  \item AI for fuzzing
+\end{itemize}
+}
+\subsection{Backgrounds}
+\subsubsection{AI fuzzing}
+\frame{
+\textbf{Fuzzing for AI}
+
+Target: AI Components
+
+\begin{itemize}
+  \item neuron coverage\footnotemark[1]
+  \item layer coverage\footnotemark[2]
+  \item formal security method\footnotemark[3]
+\end{itemize}
+\footnotetext[1]{\href{https://arxiv.org/pdf/1705.06640.pdf}{\tiny [Kexin Pei et al., 2017]DeepXplore: Automated Whitebox Testing of Deep Learning Systems}}
+\footnotetext[2]{\href{https://arxiv.org/pdf/1803.07519.pdf}{\tiny [Lei Ma et al., 2018]DeepGauge: Multi-Granularity Testing Criteria for Deep Learning Systems}}
+\footnotetext[3]{\href{https://arxiv.org/pdf/1804.10829.pdf}{\tiny [Shiqi Wang et al., 2018]Formal Security Analysis of Neural Networks using Symbolic Intervals}}
+
+
+}
+\frame{
+\textbf{AI for fuzzing}
+
+Method: AI
+
+\begin{itemize}
+  \item RNN-based(LSTM+AFL)\footnotemark[4]
+  \item CNN-based(CNN+gradient descent)\footnotemark[5]
+  \item RL(Q-Learning)\footnotemark[6]
+\end{itemize}
+\footnotetext[4]{\href{https://arxiv.org/pdf/1711.04596.pdf}{\tiny [Mohit Rajpal et al., 2017]Not all bytes are equal: Neural byte sieve for fuzzing}}
+\footnotetext[5]{\href{https://arxiv.org/pdf/1705.06640.pdf}{\tiny [Dongdong She et al., 2017]NEUZZ: Efficient Fuzzing with NeuralProgram Smoothing}}
+\footnotetext[6]{\href{https://arxiv.org/pdf/1801.04589.pdf}{\tiny [Konstantin Bottinger et al., 2018]Deep Reinforcement Fuzzing}}
+
+
+}
+\subsubsection{Testing}
+\frame{
+\textbf{Testing}
+
+\begin{itemize}
+  \item Blackbox, testing functions without peering into internal structures or workings
+  \item Whitebox, testing  internal structures or workings of an application
+  \item Greybox, tests improper structure-caused defects, if any
+\end{itemize}
+}
+\subsubsection{Coverage}
+\frame{
+  \textbf{Coverage}
+
+  \textbf{Software testing measurement} for describing the degree to which the source code of a program is executed
+
+  \begin{itemize}
+    \item Edge Coverage
+    \item Function Coverage
+    \item Statement Coverage
+
+  \end{itemize}
+}
+\subsubsection{CNN,RNN}
+\frame{
+\textbf{CNN,RNN}
+
+Short view:
+\begin{itemize}
+  \item MLP: Simplest DNN with fully-connected layers
+  \item CNN: +Hypo:Space-correlation, everywhere in CV
+  \item RNN: +Hypo:Time-correlation, usually used in Speech Analytics
+\end{itemize}
+}
+
+\subsection{Related Works-Fuzzing for AI}
+\subsubsection{DeepXPlore}
+\frame{
+\textbf{DeepXPlore}\footnotemark[1]
+
+\begin{itemize}
+  \item Neuron coverage: coverage of neurons with outputs exceeding preset thresholds
+  \item Goal: Optimize neuron coverage
+  \item How: Gradient Descending aiming to find maximal value
+\end{itemize}
+
+\footnotetext[1]{\href{https://arxiv.org/pdf/1705.06640.pdf}{\tiny [Kexin Pei et al., 2017]DeepXplore: Automated Whitebox Testing of Deep Learning Systems}}
+
+
+}
+\frame{
+\includegraphics{pics/DX1.png}
+\hfill
+\includegraphics[width=0.5\textwidth]{pics/DX2.png}
+}
+\frame{
+\includegraphics[height=1\textheight]{pics/DX3.png}
+
+}
+\subsubsection{DeepGauge}
+\frame{
+\textbf{DeepGauge}\footnotemark[2]
+
+\begin{itemize}
+  \item Neuron coverage is not enough:
+  \begin{itemize}
+    \item k-multisection Neuron Coverage
+    \item Neuron Boundary Coverage \\(Corner Region Coverage)
+    \item Strong Neuron Activation Coverage \\(Corner Case Coverage)
+  \end{itemize}
+  \item Layer coverage:
+  \begin{itemize}
+    \item Top-k Neuron Coverage
+    \item Top-k Neuron Patterns
+  \end{itemize}
+\end{itemize}
+
+\footnotetext[2]{\href{https://arxiv.org/pdf/1803.07519.pdf}{\tiny [Lei Ma et al., 2018]DeepGauge: Multi-Granularity Testing Criteria for Deep Learning Systems}}
+}
+\frame{
+\includegraphics[height=1\textheight]{pics/DG1.png}
+}
+
+\frame{
+\includegraphics[height=0.8\textheight]{pics/DG2.png}
+}
+\subsubsection{ReluVal}
+\frame{
+\textbf{ReluVal}\footnotemark[3]
+
+\begin{itemize}
+  \item Formal Security: Mathematically declared secure properties
+  \item Goal: Achieve an exhaustive, high-performance analysis method
+  \item How: Symbolic intervals and Interval analysis
+\end{itemize}
+
+\footnotetext[3]{\href{https://arxiv.org/pdf/1804.10829.pdf}{\tiny [Shiqi Wang et al., 2018]Formal Security Analysis of Neural Networks using Symbolic Intervals}}
+
+
+}
+\frame{
+\begin{itemize}
+  \item Existing adversarial testing models:
+    \begin{itemize}
+      \item No guarantee of non-existence of adversarial examples
+      \item My conjecture:
+      \begin{itemize}
+        \item Tend to overestimate %only sure there exists, not sure others not.
+        \item The example might not be applied to real life
+      \end{itemize}
+    \end{itemize}
+
+  \item High overhead of SMT
+    \begin{itemize}
+      \item especially for non-linear, non-convex function
+    \end{itemize}
+\end{itemize}
+
+}
+\frame{
+\textbf{Goal: }
+
+\footnotesize A system for \textbf{formally} checking \textbf{security properties} of \textbf{Relu-based DNNs}
+
+
+\begin{itemize}
+  \item High efficiency: "200 times on average"
+  \item High accuracy: "a variety of optimizations to improve accuracy"
+\end{itemize}
+}
+\frame[label=Model]{
+\begin{columns}[c]
+  \column{10cm}
+    \begin{itemize}
+      \item Target system: ACAS Xu
+      \item Security property: input-output-based \hyperlink{Appendix}{\beamergotobutton{To security property}}
+      \item Attacker model: similar to adversarial examples:
+    \end{itemize}
+    \quad\includegraphics[width=.9\linewidth]{pics/model-1.png}
+  \column{8cm}
+    \includegraphics[width=.7\linewidth]{pics/model.png}
+\end{columns}
+% \begin{center}
+% \includegraphics[width=.5\linewidth]{pics/model.png}
+% \end{center}
+}
+\frame{
+\begin{itemize}
+\item Main method: interval analysis
+\item $Optimization_{1}$: symbolic Interval
+\item $Optimization_{2}$: iterative refinement:\\ \quad(existence of Lipschitz Consistency)
+\end{itemize}
+}
+\frame{
+\textbf{A Working Example: aiming to verify whether safe or not}
+\begin{columns}[c]
+  \quad
+  \column{6cm}
+    $$Distance:\ x,$$
+    $$Approaching\ angle:\ y$$
+    $$Safe\ property:\ x\in [4,6]\ y \in [1,5]$$
+  \column{5cm}
+    \includegraphics[width=.8\linewidth]{pics/example.png}
+  \column{5cm}
+    \includegraphics[width=.8\linewidth]{pics/examplea.png}
+\end{columns}
+}
+\frame{
+\textbf{Dependency error}
+\begin{itemize}
+  \item Naively computing output intervals in this way suffers from high errors as it computes extremely loose bounds.
+  \item Only a highly conservative estimation of the output range, too wide to be useful for checking any safety property.
+\end{itemize}
+}
+\frame{
+\textbf{Symbolic Interval and Iterative Refinement}
+
+\begin{itemize}
+  \item Symbolic interval propagation
+  \begin{itemize}
+    \item explicitly represent the intermediate computations of each neuron in terms of the symbolic intervals that encode the interdependency of the inputs to minimize overestimation
+  \end{itemize}
+  \item Iterative refinement
+    \begin{itemize}
+      \item The dependency error for Lipschitz continuous functions decreases as the width of intervals decreases
+      \item Therefore, we can bisect the input interval by evenly dividing the interval into the union of two consecutive sub-intervals and reduce the overestimation
+    \end{itemize}
+\end{itemize}
+}
+\frame{
+\textbf{Symbolic Interval and Iterative Refinement}
+\begin{columns}[c]
+  \quad
+  \column{7cm}
+    \begin{itemize}
+      \item \footnotesize Symbolic interval propagation\\ \quad (algebraic operand preservation)
+      \item Iterative refinement\\ \quad (even interval division)
+    \end{itemize}
+  \column{4.5cm}
+    \includegraphics[width=4.8cm,height=3.6cm]{pics/exampleb.png}
+  \column{4.5cm}
+    \includegraphics[width=4.0cm,height=3.6cm]{pics/examplec.png}
+\end{columns}
+}
+\frame{
+\begin{center}
+  \includegraphics[width=.6\linewidth]{pics/method.png}
+\end{center}
+}
+\frame{
+\begin{center}
+  \includegraphics[width=.8\linewidth]{pics/ev1.png}
+\end{center}
+}
+\frame{
+\begin{center}
+  \includegraphics[width=.8\linewidth]{pics/ev2.png}
+\end{center}
+}
+% traditional ai fuzzing
+\subsection{Related Works-AI fuzzing}
+
+\subsubsection{NEUZZ}
+\frame{
+\textbf{NEUZZ}\footnotemark[4]
+
+\begin{itemize}
+  \item Goal: Find lightweight solutions with efficiency and reasonable accuracy for fuzzing
+  \item How: use CNN to train with inputs: compute edge coverage
+  \item How: Gradient decent twith sign(increase/decrease by 1)
+\end{itemize}
+\footnotetext[4]{\href{https://arxiv.org/pdf/1705.06640.pdf}{\tiny [Dongdong She et al., 2017]NEUZZ: Efficient Fuzzing with NeuralProgram Smoothing}}
+
+}
+\subsubsection{AFL+LSTM}
+\frame{
+\textbf{Neural byte sieve}\footnotemark[5]
+
+\begin{itemize}
+  \item Goal: Use Machine Learning to learn guiding strategy based on input history and code coverage
+
+\end{itemize}
+\footnotetext[5]{\href{https://arxiv.org/pdf/1711.04596.pdf}{\tiny [Mohit Rajpal et al., 2017]Not all bytes are equal: Neural byte sieve for fuzzing}}
+
+}
+\subsubsection{DRL}
+\frame{
+\textbf{Deep Reinforce Learning}\footnotemark[6]
+\begin{itemize}
+  \item Formalize fuzzing procedure into reinforcement learning
+\end{itemize}
+\footnotetext[6]{\href{https://arxiv.org/pdf/1801.04589.pdf}{\tiny [Konstantin Bottinger et al., 2018]Deep Reinforcement Fuzzing}}
+
+}
+\section{Selected topic:Privacy(Superficial)}
+\subsection{Related Work}
+\subsubsection{Data Poisoning}
+\frame{
+\textbf{Data Poisoning}
+\begin{itemize}
+  \item Given a picture
+  \item Calculate how much perturbation to add
+  \item Goal: Make Classifier misclassify or do other jobs
+\end{itemize}
+
+\footnotetext[7]{\href{https://arxiv.org/pdf/1412.6572.pdf }{\tiny [Ian J. Goodfellow et al., 2014]Explaining and Harnessing Adversarial Examples}}
+}
+\frame{
+\includegraphics[height=0.8\textheight]{pics/PO1.png}
+\\
+$$\boldsymbol{\eta}=\epsilon sign(\bigtriangledown_{x}\ J(\boldsymbol{\theta},x,y))$$
+}
+\frame{
+\center
+\includegraphics[height=0.8\textheight]{pics/gib.png}
+
+}
+\subsubsection{Sound:Voice-Over-IP}
+\frame{
+\textbf{Acoustic Eavesdropping}
+\begin{itemize}
+  \item Previous method: weak assumption, strong adversarial examples
+  \item Scene: Known keyboard type, known user habit of typing(sounds)
+  \item Goal: Learn the user typing and tell keystroke
+\end{itemize}
+\footnotetext[8]{\href{https://arxiv.org/pdf/1412.6572.pdf}{\tiny [A. Compagno et al., 2017]Don't Skype and Type! Acoustic Eavesdropping in Voice-Over-IP}}
+}
+\frame{
+\includegraphics[height=0.8\textheight]{pics/ST1.png}
+\hfill
+\includegraphics[height=0.8\textheight]{pics/ST2.png}
+
+}
+\subsubsection{The Visual Microphone}
+\frame{
+\textbf{The Visual Microphone}
+\begin{itemize}
+  \item Target: Human speaking
+  \item Gadget: crabchip/tissue/flower...+high frame rate camera
+  \item Goal: Rebuild sound signal from vibration
+\end{itemize}
+\footnotetext[9]{\href{https://people.csail.mit.edu/mrub/papers/VisualMic_SIGGRAPH2014.pdf}{\tiny [Abe Davis et al., 2014]The Visual Microphone: Passive Recovery of Sound from Video}}
+
+}
+\frame{
+\includegraphics[height=0.9\textheight]{pics/voip1.png}
+\hfill
+\includegraphics[height=0.9\textheight]{pics/voip2.png}
+}
+\frame{
+\includegraphics[height=0.9\textheight]{pics/voip3.png}
+\hfill
+\includegraphics[height=0.9\textheight]{pics/voip4.png}
+}
+\frame{
+\includegraphics[height=1\textheight]{pics/voip5.png}
+}\frame{
+\includegraphics[height=1\textheight]{pics/voip6.png}
+}
+\subsubsection{Sound:Dolphin Attack}
+\frame{
+\textbf{Dolphin Attack}
+\begin{itemize}
+  \item Target:Voice Assistant
+  \item Method: Convert human voice command into higher frequencies
+  \item Result: iPad、iPhone、MacBooks、Apple Watch、Amazon Echo, ThinkPad T440p
+\end{itemize}
+\footnotetext[10]{\href{https://arxiv.org/pdf/1708.09537.pdf}{\tiny [Guoming Zhang et al., 2017]Dolphin Attack: Inaudible Voice Commands}}
+}
+
+\frame{
+\includegraphics[height=1\textheight]{pics/DA1.png}
+
+}
+\frame{
+\includegraphics[height=1\textheight]{pics/DA2.png}
+
+}
+\frame{
+\includegraphics[height=1\textheight]{pics/DA3.png}
+
+}
+\end{document}
